@@ -47,8 +47,8 @@
       this.btnRefreshAll = new System.Windows.Forms.Button();
       this.chServerFav = new System.Windows.Forms.CheckBox();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-      this.tsLblLoadStatus = new System.Windows.Forms.ToolStripStatusLabel();
       this.tsProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
+      this.tsLblLoadStatus = new System.Windows.Forms.ToolStripStatusLabel();
       this.timerToolStripReset = new System.Windows.Forms.Timer(this.components);
       this.geoupHouseInfo.SuspendLayout();
       this.groupType.SuspendLayout();
@@ -238,22 +238,21 @@
       this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsProgressStatus,
             this.tsLblLoadStatus});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 515);
+      this.statusStrip1.Location = new System.Drawing.Point(0, 438);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(834, 22);
+      this.statusStrip1.Size = new System.Drawing.Size(770, 22);
       this.statusStrip1.TabIndex = 12;
       this.statusStrip1.Text = "statusStrip1";
-      // 
-      // tsLblLoadStatus
-      // 
-      this.tsLblLoadStatus.Name = "tsLblLoadStatus";
-      this.tsLblLoadStatus.Size = new System.Drawing.Size(27, 17);
-      this.tsLblLoadStatus.Text = "Test";
       // 
       // tsProgressStatus
       // 
       this.tsProgressStatus.Name = "tsProgressStatus";
       this.tsProgressStatus.Size = new System.Drawing.Size(100, 16);
+      // 
+      // tsLblLoadStatus
+      // 
+      this.tsLblLoadStatus.Name = "tsLblLoadStatus";
+      this.tsLblLoadStatus.Size = new System.Drawing.Size(0, 17);
       // 
       // timerToolStripReset
       // 
@@ -264,7 +263,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(834, 537);
+      this.ClientSize = new System.Drawing.Size(770, 460);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.chServerFav);
       this.Controls.Add(this.btnRefreshAll);
@@ -275,6 +274,9 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.worldList);
       this.Controls.Add(this.housesList);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
       this.Name = "Main";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Tibia Houses";

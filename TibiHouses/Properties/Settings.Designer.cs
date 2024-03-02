@@ -62,7 +62,7 @@ namespace TibiHouses.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Secura")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ambra")]
         public string favWorld {
             get {
                 return ((string)(this["favWorld"]));

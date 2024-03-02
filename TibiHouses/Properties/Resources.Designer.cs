@@ -73,6 +73,16 @@ namespace TibiHouses.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap formIcon {
+            get {
+                object obj = ResourceManager.GetObject("formIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Offline {
             get {
                 object obj = ResourceManager.GetObject("Offline", resourceCulture);
