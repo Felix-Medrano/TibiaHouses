@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TibiHouses.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="apiURLWorld" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://dev.tibiadata.com/v4/</Value>
+    </Setting>
+    <Setting Name="apiURLHouses" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://dev.tibiadata.com/v4/houses/</Value>
+    </Setting>
+    <Setting Name="apiURLHouse" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://dev.tibiadata.com/v4/house/</Value>
+    </Setting>
+    <Setting Name="errorURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.condesi.pe/blog/wp-content/uploads/2019/10/como-reparar-el-error-carga-error-al-escribir-el-archivo-en-el-disco-en-wordpress_5d9d8fb7c3951.jpeg</Value>
+    </Setting>
+    <Setting Name="favWorld" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Secura</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
