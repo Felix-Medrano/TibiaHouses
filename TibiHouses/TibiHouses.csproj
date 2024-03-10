@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>houseIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=6.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.6.0.0\lib\net462\ControlzEx.dll</HintPath>
@@ -64,8 +67,10 @@
     <Compile Include="Controller\HouseByIDController.cs" />
     <Compile Include="Controller\HouseController.cs" />
     <Compile Include="Controller\WorldController.cs" />
+    <Compile Include="Core\THEnums.cs" />
     <Compile Include="Core\THStrings.cs" />
     <Compile Include="Extra\ExtensionMethods.cs" />
+    <Compile Include="Lib\Helper.cs" />
     <Compile Include="View\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Custom\" />
-    <Folder Include="Lib\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -126,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Offline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="houseIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

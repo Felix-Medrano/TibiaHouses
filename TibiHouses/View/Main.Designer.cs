@@ -29,6 +29,12 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Fav1");
+      System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Server1", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+      System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Nodo1");
+      System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Nodo2");
+      System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Nodo3");
       this.housesList = new System.Windows.Forms.TreeView();
       this.worldList = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -47,12 +53,16 @@
       this.btnRefreshAll = new System.Windows.Forms.Button();
       this.chServerFav = new System.Windows.Forms.CheckBox();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-      this.tsLblLoadStatus = new System.Windows.Forms.ToolStripStatusLabel();
       this.tsProgressStatus = new System.Windows.Forms.ToolStripProgressBar();
+      this.tsLblLoadStatus = new System.Windows.Forms.ToolStripStatusLabel();
       this.timerToolStripReset = new System.Windows.Forms.Timer(this.components);
+      this.favoriteList = new System.Windows.Forms.TreeView();
+      this.nodeMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.tsBtnFav = new System.Windows.Forms.ToolStripMenuItem();
       this.geoupHouseInfo.SuspendLayout();
       this.groupType.SuspendLayout();
       this.statusStrip1.SuspendLayout();
+      this.nodeMenuStrip.SuspendLayout();
       this.SuspendLayout();
       // 
       // housesList
@@ -240,9 +250,14 @@
             this.tsLblLoadStatus});
       this.statusStrip1.Location = new System.Drawing.Point(0, 515);
       this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(834, 22);
+      this.statusStrip1.Size = new System.Drawing.Size(773, 22);
       this.statusStrip1.TabIndex = 12;
       this.statusStrip1.Text = "statusStrip1";
+      // 
+      // tsProgressStatus
+      // 
+      this.tsProgressStatus.Name = "tsProgressStatus";
+      this.tsProgressStatus.Size = new System.Drawing.Size(100, 16);
       // 
       // tsLblLoadStatus
       // 
@@ -250,21 +265,54 @@
       this.tsLblLoadStatus.Size = new System.Drawing.Size(27, 17);
       this.tsLblLoadStatus.Text = "Test";
       // 
-      // tsProgressStatus
-      // 
-      this.tsProgressStatus.Name = "tsProgressStatus";
-      this.tsProgressStatus.Size = new System.Drawing.Size(100, 16);
-      // 
       // timerToolStripReset
       // 
       this.timerToolStripReset.Interval = 2000;
       this.timerToolStripReset.Tick += new System.EventHandler(this.timerToolStripReset_Tick);
       // 
+      // favoriteList
+      // 
+      this.favoriteList.Location = new System.Drawing.Point(12, 241);
+      this.favoriteList.Name = "favoriteList";
+      treeNode1.Name = "Nodo4";
+      treeNode1.Text = "Fav1";
+      treeNode2.Name = "Nodo0";
+      treeNode2.Text = "Server1";
+      treeNode3.Name = "Nodo1";
+      treeNode3.Text = "Nodo1";
+      treeNode4.Name = "Nodo2";
+      treeNode4.Text = "Nodo2";
+      treeNode5.Name = "Nodo3";
+      treeNode5.Text = "Nodo3";
+      this.favoriteList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5});
+      this.favoriteList.Size = new System.Drawing.Size(147, 179);
+      this.favoriteList.TabIndex = 13;
+      this.favoriteList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.housesList_AfterSelect);
+      // 
+      // nodeMenuStrip
+      // 
+      this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsBtnFav});
+      this.nodeMenuStrip.Name = "nodeMenuStrip";
+      this.nodeMenuStrip.Size = new System.Drawing.Size(181, 48);
+      // 
+      // tsBtnFav
+      // 
+      this.tsBtnFav.Name = "tsBtnFav";
+      this.tsBtnFav.Size = new System.Drawing.Size(180, 22);
+      this.tsBtnFav.Text = "Favorito";
+      this.tsBtnFav.Click += new System.EventHandler(this.tsBtnFav_Click);
+      // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(834, 537);
+      this.ClientSize = new System.Drawing.Size(773, 537);
+      this.Controls.Add(this.favoriteList);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.chServerFav);
       this.Controls.Add(this.btnRefreshAll);
@@ -285,6 +333,7 @@
       this.groupType.PerformLayout();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
+      this.nodeMenuStrip.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -313,6 +362,9 @@
     private System.Windows.Forms.ToolStripStatusLabel tsLblLoadStatus;
     private System.Windows.Forms.ToolStripProgressBar tsProgressStatus;
     private System.Windows.Forms.Timer timerToolStripReset;
+    private System.Windows.Forms.TreeView favoriteList;
+    private System.Windows.Forms.ContextMenuStrip nodeMenuStrip;
+    private System.Windows.Forms.ToolStripMenuItem tsBtnFav;
   }
 }
 

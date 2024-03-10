@@ -2,15 +2,15 @@
 {
   public class THStrings
   {
-    public static class WorldExtraInfo
-    {
-      public const string ONLINE            = "online";
-      public const string OFFNLINE          = "offline";
-    }
-
     public static class ExtraInfo
     {
       public const string ERROR_DE_CARGA    = "(Error de carga)";
+    }
+
+    public static class FavoriteStr
+    {
+      public const string ADD_FAVORITE      = "Agregar a Favoritos";
+      public const string REMOVE_FAVORITE   = "Quitar de Favoritos";
     }
 
     public static class HouseStatus
@@ -62,6 +62,12 @@
       public const string THAIS             = "Thais";
       public const string VENORE            = "Venore";
       public const string YALAHAR           = "Yalahar";
+    }
+
+    public static class WorldExtraInfo
+    {
+      public const string ONLINE            = "online";
+      public const string OFFNLINE          = "offline";
     }
   }
 }

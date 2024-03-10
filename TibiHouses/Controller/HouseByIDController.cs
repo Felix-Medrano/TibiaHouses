@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TibiHouses.Controller
 {
-  internal class HouseByIDController
+  public class HouseByIDController
   {
     private HTTPService _service;
     public HouseByIDController() { _service = new HTTPService(); }

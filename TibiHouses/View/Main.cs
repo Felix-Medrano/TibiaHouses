@@ -2,7 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Documents;
@@ -12,8 +18,8 @@ using System.Windows.Navigation;
 using TibiHouses.Controller;
 using TibiHouses.Core;
 using TibiHouses.Extra;
+using TibiHouses.Lib;
 
-using Image = System.Drawing.Image;
 using TreeNode = System.Windows.Forms.TreeNode;
 
 namespace TibiHouses
@@ -26,6 +32,8 @@ namespace TibiHouses
     private HouseByIDController houseByIDController = new HouseByIDController();
     private HouseController houseController = new HouseController();
     private WorldController worldController = new WorldController();
+
+    private Helper helper = new Helper();
 
     private List<string> cities = new List<string>{
     THStrings.Towns.AB_DENDRIEL,
@@ -160,6 +168,8 @@ namespace TibiHouses
         timerToolStripReset.Enabled = true;
       }
 
+      lastWorld = worldList.Text;
+
       if (radHouses.Checked)
       {
         foreach (var cityCache in cityHouseDicc)
@@ -218,7 +228,7 @@ namespace TibiHouses
       CleanHouseInfo();
       if (infoHouse != null)
       {
-        HouseByID houseByID = await houseByIDController.GetHouseByID(worldList.Text, infoHouse.ID);
+        HouseByID houseByID = await houseByIDController.GetHouseByID(infoHouse.World, infoHouse.ID);
         if (houseByID != null)
         {
           url = houseByID.house.img;
@@ -292,8 +302,12 @@ namespace TibiHouses
           treeNode.Nodes.Add(house.name);
 
         infoHouse.ID = house.house_id;
+        infoHouse.Name = house.name;
+        infoHouse.World = lastWorld;
         infoHouse.Time_Left = house.auction.time_left;
 
+        nodeMenuStrip.Text = THStrings.FavoriteStr.ADD_FAVORITE;
+        treeNode.Nodes[index].ContextMenuStrip = nodeMenuStrip;
         treeNode.Nodes[index].Tag = infoHouse;
 
         return ++index;
@@ -346,41 +360,7 @@ namespace TibiHouses
 
     private void worldList_DrawItem(object sender, DrawItemEventArgs e)
     {
-      var obj = (ComboBox)sender;
-      Image imgFavIcon = null;
-      Image imgWorldState = null;
-      var worldState = worldStateDicc[obj.Items[e.Index].ToString()];
-      int textOffset = 0;
-      var imgSize = new Size(12,12);
-
-      e.DrawBackground();
-      e.DrawFocusRectangle();
-
-      if (obj.Items[e.Index].ToString() == Properties.Settings.Default.favWorld)
-      {
-        imgFavIcon = new Bitmap(Properties.Resources.favIcon, imgSize);
-        e.Graphics.DrawImage(imgFavIcon, new PointF(e.Bounds.Left + 2, e.Bounds.Top));
-        textOffset = 16;
-      }
-
-      e.Graphics.DrawString(string.Format("{0}", obj.Items[e.Index]), e.Font, new SolidBrush(e.ForeColor), e.Bounds.Left + textOffset, e.Bounds.Top);
-
-      switch (worldState)
-      {
-        case THStrings.WorldExtraInfo.ONLINE:
-          imgWorldState = new Bitmap(Properties.Resources.Online, imgSize);
-          break;
-
-        case THStrings.WorldExtraInfo.OFFNLINE:
-          imgWorldState = new Bitmap(Properties.Resources.Offline, imgSize);
-          break;
-
-        default:
-          //Do Nothing
-          break;
-      }
-
-      e.Graphics.DrawImage(imgWorldState, new PointF(e.Bounds.Right - (imgWorldState.Width + 2), e.Bounds.Top));
+      helper.ComboBoxDraw(worldStateDicc, sender, e);
     }
 
     private void chServerFav_CheckedChanged(object sender, EventArgs e)
@@ -394,15 +374,6 @@ namespace TibiHouses
           Properties.Settings.Default.favWorld = worldList.Text;
           Properties.Settings.Default.Save();
           worldFavDicc[Properties.Settings.Default.favWorld] = true;
-          /*for (int i = 0; i < worldList.Items.Count - 1; i++)
-          {
-            if (worldFavDicc[worldList.Items[i].ToString()])
-            {
-              worldList.SelectedIndex = i;
-              chServerFav.Checked = true;
-              break;
-            }
-          }*/
           worldList.Refresh();
 
         }
@@ -423,6 +394,27 @@ namespace TibiHouses
       tsProgressStatus.Visible = false;
       tsLblLoadStatus.Visible = false;
       timerToolStripReset.Enabled = false;
+    }
+
+    private void tsBtnFav_Click(object sender, EventArgs e)
+    {
+      TreeNode treeNode = null;
+      TreeNode houseNode = null;
+      var infoHouse = new InfoHouse();
+
+      foreach (TreeNode parentNode in favoriteList.Nodes)
+      {
+        if (parentNode.Text != lastWorld)
+        {
+          infoHouse = housesList.SelectedNode.Tag as InfoHouse;
+          treeNode = new TreeNode(infoHouse.World);
+          houseNode = new TreeNode(infoHouse.Name);
+          houseNode.Tag = infoHouse;
+          treeNode.Nodes.Add(houseNode);
+
+          favoriteList.Nodes.Add(treeNode);
+        }
+      }
     }
   }
 }

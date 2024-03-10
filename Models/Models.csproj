@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Favorite.cs" />
     <Compile Include="House.cs" />
     <Compile Include="HouseByID.cs" />
     <Compile Include="InfoHouse.cs" />
