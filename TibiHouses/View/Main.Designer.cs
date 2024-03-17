@@ -29,12 +29,6 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Fav1");
-      System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Server1", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-      System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Nodo1");
-      System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Nodo2");
-      System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Nodo3");
       this.housesList = new System.Windows.Forms.TreeView();
       this.worldList = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -73,6 +67,7 @@
       this.housesList.Size = new System.Drawing.Size(236, 405);
       this.housesList.TabIndex = 0;
       this.housesList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.housesList_AfterSelect);
+      this.housesList.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.housesList_NodeMouseClick);
       // 
       // worldList
       // 
@@ -248,7 +243,7 @@
       this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsProgressStatus,
             this.tsLblLoadStatus});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 438);
+      this.statusStrip1.Location = new System.Drawing.Point(0, 515);
       this.statusStrip1.Name = "statusStrip1";
       this.statusStrip1.Size = new System.Drawing.Size(773, 22);
       this.statusStrip1.TabIndex = 12;
@@ -274,21 +269,6 @@
       // 
       this.favoriteList.Location = new System.Drawing.Point(12, 241);
       this.favoriteList.Name = "favoriteList";
-      treeNode1.Name = "Nodo4";
-      treeNode1.Text = "Fav1";
-      treeNode2.Name = "Nodo0";
-      treeNode2.Text = "Server1";
-      treeNode3.Name = "Nodo1";
-      treeNode3.Text = "Nodo1";
-      treeNode4.Name = "Nodo2";
-      treeNode4.Text = "Nodo2";
-      treeNode5.Name = "Nodo3";
-      treeNode5.Text = "Nodo3";
-      this.favoriteList.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5});
       this.favoriteList.Size = new System.Drawing.Size(147, 179);
       this.favoriteList.TabIndex = 13;
       this.favoriteList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.housesList_AfterSelect);
@@ -298,12 +278,12 @@
       this.nodeMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsBtnFav});
       this.nodeMenuStrip.Name = "nodeMenuStrip";
-      this.nodeMenuStrip.Size = new System.Drawing.Size(181, 48);
+      this.nodeMenuStrip.Size = new System.Drawing.Size(118, 26);
       // 
       // tsBtnFav
       // 
       this.tsBtnFav.Name = "tsBtnFav";
-      this.tsBtnFav.Size = new System.Drawing.Size(180, 22);
+      this.tsBtnFav.Size = new System.Drawing.Size(117, 22);
       this.tsBtnFav.Text = "Favorito";
       this.tsBtnFav.Click += new System.EventHandler(this.tsBtnFav_Click);
       // 

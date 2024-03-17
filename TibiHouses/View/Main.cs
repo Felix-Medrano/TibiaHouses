@@ -21,6 +21,7 @@ using TibiHouses.Extra;
 using TibiHouses.Lib;
 
 using TreeNode = System.Windows.Forms.TreeNode;
+using TreeView = System.Windows.Forms.TreeView;
 
 namespace TibiHouses
 {
@@ -60,11 +61,14 @@ namespace TibiHouses
     private Dictionary<string, string> worldStateDicc = new Dictionary<string, string>();
     private Dictionary<string, bool> worldFavDicc = new Dictionary<string, bool>();
 
+    private THEnums.FavState favState = THEnums.FavState.None;
+
     private bool refres = false;
 
     private string town = string.Empty;
     private string lastWorld = string.Empty;
 
+    //===================================================
     //Constants
     private int HOUSE_IMG_HEIGHT = 150;
     private int HOUSE_IMG_WIDTH = 150;
@@ -178,7 +182,7 @@ namespace TibiHouses
           int index = 0;
           foreach (var houseCache in cityCache.Value)
           {
-            index = GetHouseCache(index, houseCache.Value, treeNode);
+            index = GetHouseCache(index, houseCache.Value, treeNode, cityCache.Key);
           }
           housesList.Nodes.Add(treeNode);
         }
@@ -192,7 +196,7 @@ namespace TibiHouses
           int index = 0;
           foreach (var houseCache in cityCache.Value)
           {
-            index = GetHouseCache(index, houseCache.Value, treeNode);
+            index = GetHouseCache(index, houseCache.Value, treeNode, cityCache.Key);
           }
           housesList.Nodes.Add(treeNode);
         }
@@ -215,7 +219,11 @@ namespace TibiHouses
     {
       foreach (Control item in this.Controls)
       {
-        item.Enabled = state;
+        var stringType = item.GetType().ToString().Split('.');
+        if (stringType.Last() != THStrings.Types.STATUS_STRIP)
+        {
+          item.Enabled = state;
+        }
       }
     }
 
@@ -286,7 +294,7 @@ namespace TibiHouses
       housesList.Select();
     }
 
-    private int GetHouseCache(int index, HouseList house, TreeNode treeNode)
+    private int GetHouseCache(int index, HouseList house, TreeNode treeNode, string city)
     {
       InfoHouse infoHouse = new InfoHouse();
       if (house != null)
@@ -302,12 +310,11 @@ namespace TibiHouses
           treeNode.Nodes.Add(house.name);
 
         infoHouse.ID = house.house_id;
+        infoHouse.Town = city;
         infoHouse.Name = house.name;
         infoHouse.World = lastWorld;
         infoHouse.Time_Left = house.auction.time_left;
 
-        nodeMenuStrip.Text = THStrings.FavoriteStr.ADD_FAVORITE;
-        treeNode.Nodes[index].ContextMenuStrip = nodeMenuStrip;
         treeNode.Nodes[index].Tag = infoHouse;
 
         return ++index;
@@ -315,7 +322,7 @@ namespace TibiHouses
       return index;
     }
 
-    private int GetHouseCache(int index, GuildhallList house, TreeNode treeNode)
+    private int GetHouseCache(int index, GuildhallList house, TreeNode treeNode, string city)
     {
       InfoHouse infoHouse = new InfoHouse();
       if (house != null)
@@ -331,6 +338,9 @@ namespace TibiHouses
           treeNode.Nodes.Add(house.name);
 
         infoHouse.ID = house.house_id;
+        infoHouse.Town = city;
+        infoHouse.Name = house.name;
+        infoHouse.World = lastWorld;
         infoHouse.Time_Left = house.auction.time_left;
 
         treeNode.Nodes[index].Tag = infoHouse;
@@ -398,22 +408,171 @@ namespace TibiHouses
 
     private void tsBtnFav_Click(object sender, EventArgs e)
     {
-      TreeNode treeNode = null;
+      TreeNode cityNode = null;
       TreeNode houseNode = null;
-      var infoHouse = new InfoHouse();
+      TreeNode worldNode = null;
 
-      foreach (TreeNode parentNode in favoriteList.Nodes)
+      bool canAddNode = true;
+
+      int worldIndex = 0;
+      int cityIndex = 0;
+
+      InfoHouse infoHouse = housesList.SelectedNode.Tag as InfoHouse;
+
+      houseNode = new TreeNode(infoHouse.Name);
+      houseNode.Tag = infoHouse;
+
+      if (favoriteList.Nodes.Count > 0)
       {
-        if (parentNode.Text != lastWorld)
+        foreach (TreeNode world in favoriteList.Nodes)//Recorrer la lista para verificar si el server ya existe
         {
-          infoHouse = housesList.SelectedNode.Tag as InfoHouse;
-          treeNode = new TreeNode(infoHouse.World);
-          houseNode = new TreeNode(infoHouse.Name);
-          houseNode.Tag = infoHouse;
-          treeNode.Nodes.Add(houseNode);
-
-          favoriteList.Nodes.Add(treeNode);
+          if (world.Text == infoHouse.World) // Si el Server a agregar ya existe en la lista, se iguala worldNode a world
+          {
+            worldNode = world;
+            break;
+          }
+          worldIndex++;
         }
+        if (worldNode == null)
+        {
+          favoriteList.Nodes.Add(infoHouse.World);
+          worldNode = favoriteList.Nodes[worldIndex];
+        }
+
+        foreach (TreeNode city in worldNode.Nodes)//Recorrer Ciudades
+        {
+          if (city.Text == infoHouse.Town) //Si la ciudad existe, se iguala el nodo general al nodo comparado
+          {
+            cityNode = city;
+            break;
+          }
+          cityIndex++;
+        }
+
+        if (cityNode == null)
+        {
+          favoriteList.Nodes[worldIndex].Nodes.Add(infoHouse.Town);
+          cityNode = favoriteList.Nodes[worldIndex].Nodes[cityIndex];
+        }
+
+          
+
+
+      }
+
+      switch (favState)
+      {
+        case THEnums.FavState.None:
+          break;
+        case THEnums.FavState.AddFavorite:
+          if (favoriteList.Nodes.Count != 0)
+          {
+            favoriteList.Nodes[worldIndex].Nodes[cityIndex].Nodes.Add(houseNode);
+          }
+          else
+          {
+            cityNode = new TreeNode(infoHouse.Town);
+            worldNode = new TreeNode(infoHouse.World);
+
+            cityNode.Nodes.Add(houseNode);
+            worldNode.Nodes.Add(cityNode);
+
+            favoriteList.Nodes.Add(worldNode);
+
+            //ADD: favoriteList.Sort(); ======= Arreglar logica de Add, no se agrega correctamente si se aplica Sort
+          }
+          break;
+        case THEnums.FavState.RemoveFavorite:
+          foreach (TreeNode _houseNode in favoriteList.Nodes[worldIndex].Nodes[cityIndex].Nodes)
+          {
+            if (_houseNode.Text == houseNode.Text)
+            {
+              houseNode = _houseNode;
+            }
+          }
+          favoriteList.Nodes[worldIndex].Nodes[cityIndex].Nodes.Remove(houseNode);
+          if (favoriteList.Nodes[worldIndex].Nodes[cityIndex].Nodes.Count == 0)
+          {
+            favoriteList.Nodes[worldIndex].Nodes.Remove(favoriteList.Nodes[worldIndex].Nodes[cityIndex]);
+          }
+          if (favoriteList.Nodes[worldIndex].Nodes.Count == 0)
+          {
+            favoriteList.Nodes.Remove(favoriteList.Nodes[worldIndex]);
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
+    private void housesList_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+    {
+      var obj = sender as TreeView;
+      obj.SelectedNode = e.Node;
+      switch (e.Button)
+      {
+        case MouseButtons.Left:
+          break;
+        case MouseButtons.None:
+          break;
+        case MouseButtons.Right:
+          //revisar si ya esta en lista de favoritos
+          if (favoriteList.Nodes.Count != 0)
+          {
+            foreach (TreeNode worldNode in favoriteList.Nodes)
+            {
+              if (worldNode.Text == lastWorld) //Si ya existe el server, rrecorre las ciudades
+              {
+                foreach (TreeNode cityNode in worldNode.Nodes)
+                {
+                  if (cityNode.Text == obj.SelectedNode.Parent.Text) //Si la ciudad ya existe, se rrecorre las casas
+                  {
+                    foreach (TreeNode houseNode in cityNode.Nodes)
+                    {
+                      if (houseNode.Text == e.Node.Text) //Si existe, el menu cambia a "Eliminar Favorito"
+                      {
+                        tsBtnFav.Text = THStrings.FavoriteStr.REMOVE_FAVORITE;
+                        favState = THEnums.FavState.RemoveFavorite;
+                        break; //si existe se, se rompe el ciclo
+                      }
+                      else
+                      {
+                        tsBtnFav.Text = THStrings.FavoriteStr.ADD_FAVORITE;
+                        favState = THEnums.FavState.AddFavorite;
+                      }
+                    }
+                    break;
+                  }
+                  else
+                  {
+                    tsBtnFav.Text = THStrings.FavoriteStr.ADD_FAVORITE;
+                    favState = THEnums.FavState.AddFavorite;
+                  }
+                }
+                break;
+              }
+              else
+              {
+                tsBtnFav.Text = THStrings.FavoriteStr.ADD_FAVORITE;
+                favState = THEnums.FavState.AddFavorite;
+              }
+            }
+          }
+          else // cambiar menu a "agregar"
+          {
+            tsBtnFav.Text = THStrings.FavoriteStr.ADD_FAVORITE;
+            favState = THEnums.FavState.AddFavorite;
+          }
+          e.Node.ContextMenuStrip = nodeMenuStrip;
+          break;
+        case MouseButtons.Middle:
+          break;
+        case MouseButtons.XButton1:
+          break;
+        case MouseButtons.XButton2:
+          break;
+        default:
+          break;
       }
     }
   }

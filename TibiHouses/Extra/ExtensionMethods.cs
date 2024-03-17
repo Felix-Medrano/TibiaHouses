@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -34,4 +35,8 @@ namespace TibiHouses.Extra
     }
   }
 
+  public static class BoolExtensions
+  {
+
+  }
 }

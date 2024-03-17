@@ -42,6 +42,14 @@
       public const string TRANSFER_RECEIVER = "Transfer Receiver: ";
     }
 
+    public static class MouseClicks
+    {
+      public const string CENTER             = "Center";
+      public const string RIGHT              = "Right";
+      public const string LEFT               = "Left";
+
+    }
+
     public static class Towns
     {
       public const string AB_DENDRIEL       = "Ab'Dendriel";
@@ -62,6 +70,11 @@
       public const string THAIS             = "Thais";
       public const string VENORE            = "Venore";
       public const string YALAHAR           = "Yalahar";
+    }
+
+    public static class Types
+    {
+      public const string STATUS_STRIP      = "StatusStrip";
     }
 
     public static class WorldExtraInfo
