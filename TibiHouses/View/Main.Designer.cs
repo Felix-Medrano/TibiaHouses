@@ -248,7 +248,7 @@
       this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsProgressStatus,
             this.tsLblLoadStatus});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 515);
+      this.statusStrip1.Location = new System.Drawing.Point(0, 438);
       this.statusStrip1.Name = "statusStrip1";
       this.statusStrip1.Size = new System.Drawing.Size(773, 22);
       this.statusStrip1.TabIndex = 12;
@@ -323,6 +323,9 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.worldList);
       this.Controls.Add(this.housesList);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
       this.Name = "Main";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Tibia Houses";

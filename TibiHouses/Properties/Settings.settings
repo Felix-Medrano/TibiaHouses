@@ -15,7 +15,7 @@
       <Value Profile="(Default)">https://www.condesi.pe/blog/wp-content/uploads/2019/10/como-reparar-el-error-carga-error-al-escribir-el-archivo-en-el-disco-en-wordpress_5d9d8fb7c3951.jpeg</Value>
     </Setting>
     <Setting Name="favWorld" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Secura</Value>
+      <Value Profile="(Default)">Ambra</Value>
     </Setting>
   </Settings>
 </SettingsFile>

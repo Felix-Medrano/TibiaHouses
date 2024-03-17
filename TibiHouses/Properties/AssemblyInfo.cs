@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
 [assembly: AssemblyTitle("TibiHouses")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Consulta las casas en el servidor seleccionado")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("SckDev")]
 [assembly: AssemblyProduct("TibiHouses")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
